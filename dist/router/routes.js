@@ -11,14 +11,14 @@ router.post('/turno', (req, res) => {
     res.status(200).json({ message: 'actualizado' });
 });
 router.post('/turnopiso1', (req, res) => {
-    __1.io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico': req.body.medico.replace('NH', 'Ñ'), 'paciente': req.body.paciente.replace('NH', 'Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero1' });
+    __1.io.emit('turnero1', { 'consultorio': req.body.consultorio, 'medico': req.body.medico.replace('NH', 'Ñ'), 'paciente': req.body.paciente.replace('NH', 'Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero1' });
     res.status(200).json({ message: 'actualizado' });
 });
 router.get("/turnero1", function (request, response) {
     response.sendFile(path.join(__dirname, '../public/turnero1.html'));
 });
 router.post('/turnopiso2', (req, res) => {
-    __1.io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico': req.body.medico.replace('NH', 'Ñ'), 'paciente': req.body.paciente.replace('NH', 'Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero2' });
+    __1.io.emit('turnero2', { 'consultorio': req.body.consultorio, 'medico': req.body.medico.replace('NH', 'Ñ'), 'paciente': req.body.paciente.replace('NH', 'Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero2' });
     res.status(200).json({ message: 'actualizado' });
 });
 router.get("/turnero2", function (request, response) {
