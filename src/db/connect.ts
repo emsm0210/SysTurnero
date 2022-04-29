@@ -1,17 +1,19 @@
 import loggin from '../config/logging';
 import oracledb from 'oracledb';
+const dotenv = require('dotenv').config();
 
 let connection: any;
 const NAMESPACE = 'CONNECT'
 
-oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_6'});
+//oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_6'});
+oracledb.initOracleClient({libDir: 'C:\\orant\\instantclient_21_3'});
 
 async function connect() {
     try {
         connection =  await oracledb.getConnection({
-            user: "anamnesis",
-            password: "anamnesis2021gg",
-            connectString: "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.158.10.12)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=ANAM)))"
+            user: process.env.USER,
+            password: process.env.PASS,
+            connectString: process.env.CONECCSTRING
         });
         loggin.info(NAMESPACE, 'Conexión establecida')
     } catch (err) {

@@ -11,8 +11,18 @@ router.post('/turno', (req, res) => {
     res.status(200).json({ message: 'actualizado' });
 });
 router.post('/turnopiso1', (req, res) => {
-    __1.io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico': req.body.medico, 'paciente': req.body.paciente, 'atendidos': req.body.atendidos, 'turnero': 'turnero1' });
+    __1.io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico': req.body.medico.replace('NH', 'Ñ'), 'paciente': req.body.paciente.replace('NH', 'Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero1' });
     res.status(200).json({ message: 'actualizado' });
+});
+router.get("/turnero1", function (request, response) {
+    response.sendFile(path.join(__dirname, '../public/turnero1.html'));
+});
+router.post('/turnopiso2', (req, res) => {
+    __1.io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico': req.body.medico.replace('NH', 'Ñ'), 'paciente': req.body.paciente.replace('NH', 'Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero2' });
+    res.status(200).json({ message: 'actualizado' });
+});
+router.get("/turnero2", function (request, response) {
+    response.sendFile(path.join(__dirname, '../public/turnero2.html'));
 });
 router.post('/callback', (req, res) => {
     __1.io.emit('parameter', { 'nuevoTurno': req.body.turno, 'caja': req.body.caja, 'atendidos': 'void' });
@@ -23,9 +33,6 @@ router.get("/", function (request, response) {
 });
 router.get("/nuevo", function (request, response) {
     response.sendFile(path.join(__dirname, '../public/index1.html'));
-});
-router.get("/turnero1", function (request, response) {
-    response.sendFile(path.join(__dirname, '../public/turnero1.html'));
 });
 router.get("/crearTurno", function (request, response) {
     response.sendFile(path.join(__dirname, '../public/views/crearTurno.html'));

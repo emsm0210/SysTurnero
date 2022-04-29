@@ -7,13 +7,14 @@ const logging_1 = __importDefault(require("../config/logging"));
 const oracledb_1 = __importDefault(require("oracledb"));
 let connection;
 const NAMESPACE = 'CONNECT';
-oracledb_1.default.initOracleClient({ configDir: '/opt/oracle/instantclient_21_6' });
+//oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_6'});
+oracledb_1.default.initOracleClient({ libDir: 'C:\\orant\\instantclient_21_3' });
 async function connect() {
     try {
         connection = await oracledb_1.default.getConnection({
             user: "anamnesis",
-            password: "anamguide1",
-            connectString: "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.158.10.251)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=ANAM)))"
+            password: "anamnesis2021gg",
+            connectString: "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.158.10.12)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=ANAM)))"
         });
         logging_1.default.info(NAMESPACE, 'Conexión establecida');
     }
