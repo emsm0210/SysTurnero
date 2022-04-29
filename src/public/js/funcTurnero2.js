@@ -97,8 +97,6 @@ function getTurnosAtendidos() {
 //funcion que controla el nombre del paciente y el médico
 function controlCadena(tBody) {
     $('#' + tBody + ' tr').find("td span:eq(1)").each(function() {
-        console.log($(this).outerHeight());
-        console.log($(this).html());
         if ($(this).outerHeight() > 97) {
             var cadena = $(this).html();
             var arrayCadena = cadena.split(' ');
@@ -110,7 +108,6 @@ function controlCadena(tBody) {
                     nuevoNombre = nuevoNombre + ' ' + arrayCadena[i].trim();
                 }
             }
-            console.log(nuevoNombre.trim());
             $(this).html(nuevoNombre.trim());
             if ($(this).outerHeight() > 97) {
                 var cadena2 = $(this).html();
@@ -123,7 +120,6 @@ function controlCadena(tBody) {
                         nuevoNombre2 = nuevoNombre2 + ' ' + arrayCadena2[i].trim();
                     }
                 }
-                console.log(nuevoNombre2.trim());
                 $(this).html(nuevoNombre2.trim());
             }
         }
@@ -135,7 +131,7 @@ function controlCadena(tBody) {
 function wsConnect() {
     const websocket = io(URL);
 
-    websocket.on('parameter', (evt) => {
+    websocket.on('turnero2', (evt) => {
         onMessage(evt);
     });
 
@@ -171,30 +167,33 @@ function onClose(evt) {
 
 // Se invoca cuando se recibe un mensaje del servidor
 function onMessage(evt) {
-    console.log(evt);
-    var pacienteVerif = [];
-    var nuevoPac = '';
-    var correccion = '';
-    pacienteVerif = evt.paciente.split(' ');
-    for (var i = 0; i < pacienteVerif.length; i++) {
-        for (let j in mydata) {
-            if (mydata[j].incor.toLowerCase() == pacienteVerif[i].replace('NH', 'Ñ').toLowerCase()) {
-                correccion = mydata[j].corr.toUpperCase();
+    console.log(evt.turnero);
+    if (evt.turnero = 'turnero1') {
+        var pacienteVerif = [];
+        var nuevoPac = '';
+        var correccion = '';
+        pacienteVerif = evt.paciente.split(' ');
+        for (var i = 0; i < pacienteVerif.length; i++) {
+            for (let j in mydata) {
+                if (mydata[j].incor.toLowerCase() == pacienteVerif[i].replace('NH', 'Ñ').toLowerCase()) {
+                    correccion = mydata[j].corr.toUpperCase();
+                }
+            }
+            if (correccion != '') {
+                nuevoPac = nuevoPac + ' ' + correccion;
+                correccion = '';
+            } else {
+                nuevoPac = nuevoPac + ' ' + pacienteVerif[i];
             }
         }
-        if (correccion != '') {
-            nuevoPac = nuevoPac + ' ' + correccion;
-            correccion = '';
+        evt.paciente = nuevoPac;
+        var element = document.getElementById('myModal');
+        if (element.style.display == 'block' || avisoEnCola.length > 0) {
+            avisoEnCola.push(evt);
         } else {
-            nuevoPac = nuevoPac + ' ' + pacienteVerif[i];
+            mostrarTurno(evt);
         }
-    }
-    evt.paciente = nuevoPac;
-    var element = document.getElementById('myModal');
-    if (element.style.display == 'block' || avisoEnCola.length > 0) {
-        avisoEnCola.push(evt);
-    } else {
-        mostrarTurno(evt);
+
     }
 }
 

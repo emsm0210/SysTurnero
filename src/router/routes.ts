@@ -13,7 +13,7 @@ router.post('/turno', (req: Request, res: Response) => {
 });
 
 router.post('/turnopiso1', (req: Request, res: Response) => {
-  io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico':req.body.medico.replace('NH','Ñ'), 'paciente': req.body.paciente.replace('NH','Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero1' });
+  io.emit('turnero1', { 'consultorio': req.body.consultorio, 'medico':req.body.medico.replace('NH','Ñ'), 'paciente': req.body.paciente.replace('NH','Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero1' });
   res.status(200).json({ message: 'actualizado' });
 });
 
@@ -22,7 +22,7 @@ router.get("/turnero1", function (request, response) {
 });
 
 router.post('/turnopiso2', (req: Request, res: Response) => {
-  io.emit('parameter', { 'consultorio': req.body.consultorio, 'medico':req.body.medico.replace('NH','Ñ'), 'paciente': req.body.paciente.replace('NH','Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero2' });
+  io.emit('turnero2', { 'consultorio': req.body.consultorio, 'medico':req.body.medico.replace('NH','Ñ'), 'paciente': req.body.paciente.replace('NH','Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero2' });
   res.status(200).json({ message: 'actualizado' });
 });
 

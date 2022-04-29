@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const logging_1 = __importDefault(require("../config/logging"));
+const config_1 = require("../config/config");
 const oracledb_1 = __importDefault(require("oracledb"));
 let connection;
 const NAMESPACE = 'CONNECT';
@@ -12,9 +13,9 @@ oracledb_1.default.initOracleClient({ libDir: 'C:\\orant\\instantclient_21_3' })
 async function connect() {
     try {
         connection = await oracledb_1.default.getConnection({
-            user: "anamnesis",
-            password: "anamnesis2021gg",
-            connectString: "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.158.10.12)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=ANAM)))"
+            user: config_1.USER_DB,
+            password: config_1.PASS_DB,
+            connectString: config_1.CONNEC_DB
         });
         logging_1.default.info(NAMESPACE, 'Conexión establecida');
     }
