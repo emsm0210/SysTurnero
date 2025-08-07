@@ -49,7 +49,11 @@ export async function getAtendidos(req: Request, res: Response): Promise<Respons
 
 export async function getAtendidosTurnero(req: Request, res: Response): Promise<Response | void> {
     try {
-        sql = `SELECT CONS_NRO_ID_CONSULTORIO NRO_CONS,
+        sql = `SELECT (case when to_number(CONS_NRO_ID_CONSULTORIO) >=800 then
+        SUBSTR(CONS_NRO_ID_CONSULTORIO, 3, 1)
+        else
+         to_char(CONS_NRO_ID_CONSULTORIO)
+          end )NRO_CONS,
                         PAC_ID_PACIENTE ID_PAC,
                         PACIENTE,
                         DET_MEDICO_ID_DET_MEDICO ID_MED,

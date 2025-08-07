@@ -30,6 +30,26 @@ router.get("/turnero2", function (request, response) {
   response.sendFile(path.join(__dirname, '../public/turnero2.html'));
 });
 
+
+router.get("/turneroUrgAd", function (request, response) {
+  response.sendFile(path.join(__dirname, '../public/turneroUrgAd.html'));
+});
+
+router.post('/turnopiso8', (req: Request, res: Response) => {
+  io.emit('turnero8', { 'consultorio': req.body.consultorio.toString().replace('80',''), 'medico':req.body.medico.replace('NH','Ñ'), 'paciente': req.body.paciente.replace('NH','Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero8' });
+  res.status(200).json({ message: 'actualizado' });
+});
+
+
+router.get("/turneroUrgPed", function (request, response) {
+  response.sendFile(path.join(__dirname, '../public/turneroUrgPed.html'));
+});
+
+router.post('/turnopiso9', (req: Request, res: Response) => {
+  io.emit('turnero9', { 'consultorio': req.body.consultorio.toString().replace('90',''), 'medico':req.body.medico.replace('NH','Ñ'), 'paciente': req.body.paciente.replace('NH','Ñ'), 'atendidos': req.body.atendidos, 'turnero': 'turnero8' });
+  res.status(200).json({ message: 'actualizado' });
+});
+
 router.post('/callback', (req: Request, res: Response) => {
   io.emit('parameter', { 'nuevoTurno': req.body.turno, 'caja': req.body.caja, 'atendidos':'void'});
   res.status(200).json({ message: 'ok' });

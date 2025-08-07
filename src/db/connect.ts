@@ -5,8 +5,8 @@ import oracledb from 'oracledb';
 let connection: any;
 const NAMESPACE = 'CONNECT'
 
-//oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_6'});
-oracledb.initOracleClient({libDir: 'C:\\orant\\instantclient_21_3'});
+oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_6'});
+//oracledb.initOracleClient({libDir: 'C:\\orant\\instantclient_21_3'});
 
 async function connect() {
     try {
