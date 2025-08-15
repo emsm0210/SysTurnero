@@ -8,8 +8,8 @@ const config_1 = require("../config/config");
 const oracledb_1 = __importDefault(require("oracledb"));
 let connection;
 const NAMESPACE = 'CONNECT';
-//oracledb.initOracleClient({configDir: '/opt/oracle/instantclient_21_6'});
-oracledb_1.default.initOracleClient({ libDir: 'C:\\orant\\instantclient_21_3' });
+oracledb_1.default.initOracleClient({ configDir: '/opt/oracle/instantclient_21_6' });
+//oracledb.initOracleClient({libDir: 'C:\\orant\\instantclient_21_3'});
 async function connect() {
     try {
         connection = await oracledb_1.default.getConnection({

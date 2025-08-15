@@ -7,8 +7,8 @@ var posicionActual = 0;
 const TIEMPO_INTERVALO = 8000;
 const TIEMPO_COLA = 3000;
 const MUSIC = new Audio('../sounds/store-door-chime.wav');
-//const URL = 'http://192.158.10.116:3000';
-const URL = 'http://192.158.10.34:3000';
+const URL = 'http://192.158.10.116:3000';
+//const URL = 'http://192.158.10.34:3000';
 var mydata;
 
 function init() {
@@ -168,7 +168,7 @@ function onClose(evt) {
 // Se invoca cuando se recibe un mensaje del servidor
 function onMessage(evt) {
     console.log(evt.turnero);
-    if (evt.turnero = 'turnero1') {
+    if (evt.turnero = 'turnero2') {
         var pacienteVerif = [];
         var nuevoPac = '';
         var correccion = '';
