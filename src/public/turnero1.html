@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="css/montserrat.css" />
-    <link rel="stylesheet" href="css/styleTurneroCons.css" />
+    <link rel="stylesheet" href="css/styleTurneroConsNew.css" />
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="js/diccionario.js"></script>
     <script src="js/funcTurnero1.js"></script>
@@ -15,14 +15,19 @@
 
 <body>
     <div class="wrapper">
+        <!-- 70%: Publicidad (VIDEO) -->
         <div class="principal-arriba">
+            <video id="pubPlayer" autoplay muted playsinline preload="auto">
+            </video>
+        </div>
+
+        <!-- 30%: Tabla de últimos llamados -->
+        <div class="principal-abajo">
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 10%;">Consultorio</th>
+                        <th style="width: 10%;">Box</th>
                         <th>Últimos Llamados</th>
-                        <!-- <th style="width: 45%;">Médico</th>
-                        <th style="width: 45%;">Paciente</th> -->
                     </tr>
                 </thead>
                 <tbody id="turnos">
@@ -42,36 +47,8 @@
                         <td style="width: 10%;" class="red"></td>
                         <td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>
                     </tr>
-                    <!-- <tr id="fila_0">
-                        <td style="width: 10%;" class="red">101</td>
-                        <td style="width: 45%;" class="light-blue">DRA. GICELA LOVERA</td>
-                        <td style="width: 45%;" class="blue">EMILIO MARTIN SOSA MENDIETA</td>
-                    </tr>
-                    <tr id="fila_1">
-                        <td style="width: 10%;" class="red"></td>
-                        <td style="width: 45%;" class="light-blue"></td>
-                        <td style="width: 45%;" class="blue"></td>
-                    </tr>
-                    <tr id="fila_2">
-                        <td style="width: 10%;" class="red"></td>
-                        <td style="width: 45%;" class="light-blue"></td>
-                        <td style="width: 45%;" class="blue"></td>
-                    </tr>
-                    <tr id="fila_3">
-                        <td style="width: 10%;" class="red"></td>
-                        <td style="width: 45%;" class="light-blue"></td>
-                        <td style="width: 45%;" class="blue"></td>
-                    </tr> -->
-                    <!-- <tr id="fila_4">
-                        <td style="width: 10%;" class="red"></td>
-                        <td style="width: 45%;" class="light-blue"></td>
-                        <td style="width: 45%;" class="blue"></td>
-                    </tr> -->
                 </tbody>
             </table>
-        </div>
-        <div class="principal-abajo">
-            <img id="imagen">
         </div>
     </div>
     <!-- Modal content -->
