@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang="es">
+
+<head>
+    <title>Tunos</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="css/montserrat.css" />
+    <link rel="stylesheet" href="css/styleTurneroCons.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="js/diccionario.js"></script>
+    <script src="js/funcTurnero2.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="principal-arriba">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Consultorio</th>
+                        <th>Últimos Llamados</th>
+                        <!-- <th style="width: 45%;">Médico</th>
+                        <th style="width: 45%;">Paciente</th> -->
+                    </tr>
+                </thead>
+                <tbody id="turnos">
+                    <tr id="fila_0">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>
+                    </tr>
+                    <tr id="fila_1">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>
+                    </tr>
+                    <tr id="fila_2">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>
+                    </tr>
+                    <tr id="fila_3">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>
+                    </tr>
+                    <!-- <tr id="fila_0">
+                        <td style="width: 10%;" class="red">101</td>
+                        <td style="width: 45%;" class="light-blue">DRA. GICELA LOVERA</td>
+                        <td style="width: 45%;" class="blue">EMILIO MARTIN SOSA MENDIETA</td>
+                    </tr>
+                    <tr id="fila_1">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 45%;" class="light-blue"></td>
+                        <td style="width: 45%;" class="blue"></td>
+                    </tr>
+                    <tr id="fila_2">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 45%;" class="light-blue"></td>
+                        <td style="width: 45%;" class="blue"></td>
+                    </tr>
+                    <tr id="fila_3">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 45%;" class="light-blue"></td>
+                        <td style="width: 45%;" class="blue"></td>
+                    </tr> -->
+                    <!-- <tr id="fila_4">
+                        <td style="width: 10%;" class="red"></td>
+                        <td style="width: 45%;" class="light-blue"></td>
+                        <td style="width: 45%;" class="blue"></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <div class="principal-abajo">
+            <img id="imagen">
+        </div>
+    </div>
+    <!-- Modal content -->
+    <div id="myModal" class="modalContainer">
+        <div class="modal-content">
+            <span class="parpadea texto"><strong id="mostrarTurno"></strong>
+        </div>
+    </div>
+</body>
+
+</html>

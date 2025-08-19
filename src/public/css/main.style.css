@@ -1,0 +1,416 @@
+html {
+    height: 100%;
+}
+
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+    height: 100%;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    height: 100%;
+}
+
+.principal-arriba {
+    width: 100%;
+    height: 70%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.contenedor-turnos {
+    width: 65%;
+    /* height: 100%; */
+    height: 70%;
+    position: relative;
+    order: 1;
+}
+
+
+/*div ultimo turno llamado*/
+
+.turno-actual {
+    width: 75%;
+    height: 100%;
+    position: relative;
+    float: left;
+    box-sizing: border-box;
+    /* background-color: #D7E6F7; */
+    background-color: white;
+    /* background-image: url(images/overlay.png), url(images/pattern-size1.svg);
+    background-position: top left, center center;
+    background-attachment: fixed, fixed;
+    background-size: auto, cover; */
+    /* background: rgb(21, 78, 163);
+    background: radial-gradient(circle, rgba(21, 78, 163, 1) 0%, rgba(25, 156, 216, 1) 50%, rgba(27, 76, 149, 0.8407738095238095) 100%); */
+}
+
+
+/*.turno-actual:before {
+    content: "";
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+    z-index: -1;
+    background-color: #D7E6F7;
+    background: rgb(25, 156, 216);
+    background: linear-gradient(to top, rgba(25, 156, 216, 1) 0%, rgba(27, 76, 149, 1) 100%); 
+}*/
+
+.titulo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ultimo-turno {
+    width: 100%;
+    height: 40%;
+    align-items: stretch;
+    position: relative;
+}
+
+.ultimo-turno-img {
+    width: 100%;
+    height: 30%;
+}
+
+.ultimo-turno-img div {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-top: 1px solid black;
+    box-sizing: border-box;
+}
+
+.recuadro-titulo {
+    width: 50%;
+    height: 25%;
+    float: left;
+}
+
+
+/* .turno-arriba {
+    font-size: 250% !important;
+    color: white;
+} */
+
+.recuadro-body {
+    width: 50%;
+    height: 75%;
+    float: left;
+}
+
+.turno-abajo {
+    font-size: 400% !important;
+}
+
+.contenido-turno {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*fin div ultimo turno*/
+
+.contenedor-video {
+    width: 35%;
+    /* height: 100%; */
+    height: 70%;
+    position: relative;
+    order: 2;
+}
+
+.contenedor-video video {
+    width: 100%;
+    height: 100%;
+    background-color: #D7E6F7;
+}
+
+.principal-abajo {
+    width: 100%;
+    height: 30%;
+    position: relative;
+    order: 3;
+    padding-left: 1px;
+    padding-right: 1px;
+    box-sizing: border-box;
+}
+
+.principal-abajo img {
+    width: 100%;
+    height: auto !important;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+}
+
+@supports(object-fit: cover) {
+    .principal-abajo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
+}
+
+
+/*tabla de turnos atendidos*/
+
+.atendidos {
+    width: 25%;
+    height: 100%;
+    background: white;
+    position: relative;
+    float: right;
+}
+
+.atendidos table {
+    min-height: 300px;
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+}
+
+.atendidos th {
+    font-size: 150%;
+    padding: 25px;
+}
+
+.atendidos td {
+    font-size: 140%;
+    padding-bottom: 3px;
+    font-weight: 600;
+}
+
+.leyenda {
+    width: 100%;
+    height: 5%;
+    display: none;
+}
+
+@media screen and (max-width: 1100px) {
+    .contenedor-turnos {
+        order: 1;
+        width: 100%;
+        height: 40%;
+    }
+    h1 {
+        font-size: 470%;
+    }
+    .turno-actual {
+        width: 65%;
+    }
+    .atendidos {
+        width: 35%;
+    }
+    /* .logo {
+        background: url(../images/interlab.png);
+        height: 30%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+    } */
+    .box {
+        width: 100%;
+        height: 30%;
+        overflow: hidden;
+    }
+    .box img {
+        width: 100%;
+        height: 100%;
+    }
+    @supports(object-fit: cover) {
+        .box img {
+            height: 100%;
+            object-fit: contain;
+            object-position: center center;
+        }
+    }
+    .atendidos table {
+        height: 70%;
+    }
+    .atendidos th {
+        font-size: 300%;
+        padding: 25px;
+    }
+    .atendidos tbody tr:nth-child(odd) {
+        background-color: #D7E6F7;
+    }
+    .atendidos tbody tr:nth-child(even) {
+        background-color: white;
+    }
+    .atendidos td {
+        font-size: 290%;
+        padding-bottom: 3px;
+        font-weight: 600;
+    }
+    .contenedor-video {
+        order: 3;
+        width: 100%;
+        height: 35%;
+    }
+    .principal-abajo {
+        order: 4;
+        width: 100%;
+        height: 15%;
+    }
+    .turno-arriba {
+        font-size: 300% !important;
+    }
+    .turno-abajo {
+        font-size: 450% !important;
+    }
+    .leyenda {
+        order: 2;
+        width: 100%;
+        height: 10%;
+        display: block;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        word-break: break-all;
+        box-sizing: border-box;
+        border: 1px solid black;
+    }
+    .leyenda img {
+        max-width: 100%;
+    }
+}
+
+
+/*MODAL*/
+
+
+/* Modal Header */
+
+.modalContainer {
+    display: none;
+    scrollbar-width: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #D7E6F7;
+    /* background: rgb(25, 156, 216);
+    background: linear-gradient(to top, rgba(25, 156, 216, 1) 0%, rgba(27, 76, 149, 1) 100%); */
+    /* background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4); */
+}
+
+.modalContainer .modal-content {
+    background-color: transparent;
+    margin: auto;
+    border: 1px solid transparent;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.texto {
+    font-size: 200px;
+    font-family: helvetica;
+    font-weight: bold;
+    color: #199CD8;
+    text-transform: uppercase;
+}
+
+.parpadea {
+    animation-name: parpadeo;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: parpadeo;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes parpadeo {
+    0% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+}
+
+@-webkit-keyframes parpadeo {
+    0% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+}
+
+@keyframes parpadeo {
+    0% {
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 0.0;
+    }
+    100% {
+        opacity: 1.0;
+    }
+}
+
+
+/*FONTS*/
+
+.bold {
+    /* Montserrat Bold = 700 */
+    font-weight: 700 !important;
+    font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif !important;
+    ;
+}
+
+.black {
+    /* Montserrat Black = 900 */
+    font-weight: 900 !important;
+    font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif !important;
+}
+
+.font-azul {
+    color: #1C4B94;
+}
+
+.font-cyan {
+    color: #199CD8;
+}

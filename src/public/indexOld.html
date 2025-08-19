@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="es">
+
+<head>
+    <title>Tunos</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/styleTurnos.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <script src="js/funciones.js"></script>
+</head>
+
+<body>
+    <div class="page">
+        <div class="wrapper">
+            <div class="content-wrapper">
+                <div class="content">
+                    <div class="marco-tablaTurnos">
+
+                        <div class="contenedor-tablaTurnos">
+                            <div class="columna-tablaTurnos">
+                                <div class="tabla-turnosArriba">Turno</div>
+                                <div class="tabla-turnosAbajo" id="verTurno">
+                                    0000
+                                </div>
+
+                            </div>
+                            <div class="columna-tablaTurnos">
+                                <div class="tabla-turnosArriba">Caja</div>
+                                <div class="tabla-turnosAbajo" id="verCaja">----
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="contenedor-turnos">
+
+                    <table class="tabla-turnos" id="tabla-turnos">
+                        <thead>
+                            <tr>
+                                <th>Turno</th>
+                                <th colspan="2">Caja</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyTurnosAtendidos">
+                        </tbody>
+                    </table>
+
+                    <!-- <input type="hidden" name="turnos" id="turnos" value="<?php echo $data; ?>"> -->
+
+                </div>
+                <!--contenedor turnos-->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

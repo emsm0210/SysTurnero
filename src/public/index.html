@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="es">
+
+<head>
+    <title>Tunos</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.style.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/funciones.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- <div class="principal-arriba"> -->
+        <div class="contenedor-turnos">
+            <div class="turno-actual" style="border-right: 1px solid black;">
+                <div class="titulo" style="height: 30%;">
+                    <h1 class="black font-azul">ÚLTIMO TURNO LLAMADO</h1>
+                </div>
+                <div class="ultimo-turno">
+                    <div class="recuadro-titulo turno-arriba">
+                        <h2 class="contenido-turno black font-cyan">TURNO</h2>
+                    </div>
+                    <div class="recuadro-titulo turno-arriba">
+                        <h2 class="contenido-turno black font-cyan">CAJA</h2>
+                    </div>
+                    <div class="recuadro-body turno-abajo">
+                        <h2 class="contenido-turno bold font-azul" id="verTurno">0000</h2>
+                    </div>
+                    <div class="recuadro-body turno-abajo">
+                        <h2 class="contenido-turno bold font-azul" id="verCaja">-----</h2>
+                    </div>
+                </div>
+                <div class="ultimo-turno-img">
+                    <div style="background-image: url('../images/b-foto.png');">
+                    </div>
+                </div>
+            </div>
+            <div class="atendidos">
+                <!-- <div class="logo"></div> -->
+                <div class="box" style="border-bottom: 1px solid black;">
+                    <img src="./images/logo interlab.svg" alt="Cargando imagen...">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="black font-cyan">Turno</th>
+                            <th class="black font-cyan" colspan="2">Caja</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodyTurnosAtendidos">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="contenedor-video" id="mostrarVideos">
+        </div>
+        <!-- </div> -->
+        <div class="principal-abajo">
+            <img id="imagen">
+        </div>
+        <div class="leyenda">
+            <img src="./images/leyenda.png" alt="Cargando imagen...">
+        </div>
+    </div>
+    <!-- Modal content -->
+    <div id="myModal" class="modalContainer">
+        <div class="modal-content">
+            <span class="parpadea texto"><strong id="mostrarTurno"></strong>
+        </div>
+    </div>
+</body>
+
+</html>
