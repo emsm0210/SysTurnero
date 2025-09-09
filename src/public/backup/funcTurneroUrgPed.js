@@ -4,22 +4,12 @@ let intervalo;
 let avisoEnCola = [];
 var posicionArray = 0;
 var posicionActual = 0;
-const TIEMPO_INTERVALO = 8000;
-const TIEMPO_COLA = 3000;
+const TIEMPO_INTERVALO = 8000; //8 segundos  TIEMPO COLA ENTRE CAMBIO DE IMAGENES 
+const TIEMPO_COLA = 3000; //3 SEGUNDOS TIEMPO COLA LLAMADO
 const MUSIC = new Audio('../sounds/store-door-chime.wav');
-//const URL = 'http://192.158.10.116:3000';
-//const URL = 'http://192.158.10.34:3000';
-const URL = 'http://127.0.0.1';
-const API_VIDEOS_LIST = '/api/videos';
-const API_VIDEOS_STREAM = '/api/videos/stream';
+const URL = 'http://192.158.10.116:3000';
+//const URL = 'http://192.158.10.233:3000';
 var mydata;
-
-/*cambio a video*/
-let currentPlaylist = [];   // [{src, name, mtimeMs}]
-let nextPlaylist = null;    // lista nueva a adoptar al final del ciclo
-let currentIndex = 0;
-let isPlaying = false;
-
 
 function init() {
     images();
@@ -40,136 +30,27 @@ function init() {
 
 //llama al lector de imagenes
 function images() {
-   /*$.get(URL + '/images1')
+    $.get(URL + '/images1')
         .done(function(data) {
             var jsonImages = JSON.parse(data);
             timerImage(jsonImages);
         }).fail(function(error) {
             console.log("error al buscar imagenes");
-        });*/
-    setupVideoSSE();      // escucha cambios de /api/videos/stream
-    startVideoIfNeeded(); // empieza con la lista actual de /api/videos
-}
-
-async function fetchVideoList() {
-    try {
-        const res = await fetch(API_VIDEOS_LIST, { cache: 'no-store' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json(); // {version, videos:[{src,name,mtimeMs}]}
-        return Array.isArray(data.videos) ? data.videos : [];
-    } catch (e) {
-        console.error('Error fetchVideoList:', e);
-        return [];
-    }
-}
-
-function setupVideoSSE() {
-    try {
-        const es = new EventSource(API_VIDEOS_STREAM);
-        es.addEventListener('videos', (ev) => {
-            try {
-                const payload = JSON.parse(ev.data); // {version, videos}
-                const incoming = Array.isArray(payload.videos) ? payload.videos : [];
-                const same = JSON.stringify(incoming) === JSON.stringify(currentPlaylist);
-                if (!same) {
-                    // guardamos para el próximo ciclo sin cortar el actual
-                    nextPlaylist = incoming;
-                    if (!isPlaying || currentPlaylist.length === 0) {
-                        adoptNextPlaylist();
-                        startVideoIfNeeded();
-                    }
-                }
-            } catch (err) {
-                console.error('SSE parse error:', err);
-            }
         });
-        es.onerror = (err) => {
-            console.warn('SSE error (el navegador reintentará):', err);
-        };
-    } catch (e) {
-        console.warn('SSE no disponible; fallback a polling');
-        setInterval(async () => {
-            const list = await fetchVideoList();
-            const same = JSON.stringify(list) === JSON.stringify(currentPlaylist);
-            if (!same) nextPlaylist = list;
-        }, 15000);
-    }
 }
 
-function adoptNextPlaylist() {
-    if (nextPlaylist) {
-        currentPlaylist = nextPlaylist.slice();
-        nextPlaylist = null;
-        currentIndex = 0;
-    }
-}
-
-function setSourceAndPlay(item) {
-    if (!item) return;
-    const player = document.getElementById('pubPlayer');
-    if (!player) {
-        console.error('No se encontró #pubPlayer en el DOM');
-        return;
-    }
-    player.src = item.src; // ej: /videos/spot1.mp4
-    const p = player.play?.();
-    if (p && typeof p.then === 'function') {
-        p.catch(err => {
-            // endurecer autoplay por políticas del navegador
-            console.warn('Autoplay falló; forzando muted y reintentando:', err);
-            player.muted = true;
-            player.play().catch(() => { });
+/*function images() {
+    $.get(URL + '/imagesUrgAd')
+        .done(function(data) {
+            var jsonImages = JSON.parse(data);
+            timerImage(jsonImages);
+        }).fail(function(error) {
+            console.log("error al buscar imagenes");
         });
-    }
-}
-
-function onVideoEnded() {
-    currentIndex++;
-    if (currentIndex >= currentPlaylist.length) {
-        // fin de ciclo
-        if (nextPlaylist) adoptNextPlaylist();
-        if (currentPlaylist.length === 0) {
-            isPlaying = false;
-            setTimeout(startVideoIfNeeded, 5000);
-            return;
-        }
-        currentIndex = 0;
-    }
-    setSourceAndPlay(currentPlaylist[currentIndex]);
-}
-
-function onVideoError() {
-    console.warn('Error cargando video, salto al siguiente');
-    onVideoEnded();
-}
-
-async function startVideoIfNeeded() {
-    if (isPlaying) return;
-    const player = document.getElementById('pubPlayer');
-    if (!player) return;
-
-    // enganchar listeners una sola vez
-    if (!player.dataset._bound) {
-        player.addEventListener('ended', onVideoEnded);
-        player.addEventListener('error', onVideoError);
-        player.dataset._bound = '1';
-    }
-
-    if (currentPlaylist.length === 0) {
-        currentPlaylist = await fetchVideoList();
-        if (currentPlaylist.length === 0) {
-            setTimeout(startVideoIfNeeded, 5000);
-            return;
-        }
-    }
-    isPlaying = true;
-    currentIndex = 0;
-    setSourceAndPlay(currentPlaylist[currentIndex]);
-}
-/*fin agregado */
+}*/
 
 function timerImage(data) {
-    /*intervalo = window.setInterval(function() {
+    intervalo = window.setInterval(function() {
         var a = document.getElementById("imagen");
         a.src = '../images/zocaloTurn1/' + data[posicionActual].nombre;
         if (posicionActual >= data.length - 1) {
@@ -178,26 +59,41 @@ function timerImage(data) {
             posicionActual++;
         }
 
-    }, TIEMPO_INTERVALO);*/
+    }, TIEMPO_INTERVALO);
 }
 
+/*
+function timerImage(data) {
+    intervalo = window.setInterval(function() {
+        var a = document.getElementById("imagen");
+        a.src = '../images/CARPETANUEVA/' + data[posicionActual].nombre;
+        if (posicionActual >= data.length - 1) {
+            posicionActual = 0;
+        } else {
+            posicionActual++;
+        }
+
+    }, TIEMPO_INTERVALO);
+} 
+*/
+
 function getTurnosAtendidos() {
-    $.post(URL + '/atendidosTurnero/1/2')
+    $.post(URL + '/atendidosTurnero/1/9')
         .done(function(data) {
             var json = JSON.parse(data);
             var tabla = '';
-            if (json.length >= /*4*/ 2) {
+            if (json.length >= 4) {
                 for (let x in json) {
                     tabla += '<tr id="fila_' + x + '">';
-                    tabla += '<td style="width: 10%;" class="red">' + json[x].consultorio + '</td>';
+                    tabla += '<td style="width: 10%;" class="red">' + json[x].consultorio.toString().replace('90', '') + '</td>';
                     tabla += '<td style="width: 90%;"><span class="light-blue">MÉDICO: ' + json[x].medico + '</span><br><span class="blue">' + json[x].paciente + '</span></td>';
                     tabla += '</tr>';
                 }
-            } else if (json.length < /*4*/ 2 && json.length > 0) {
-                for (let x = 0; x < /*4*/ 2; x++) {
+            } else if (json.length < 4 && json.length > 0) {
+                for (let x = 0; x < 4; x++) {
                     if (x < json.length) {
                         tabla += '<tr id="fila_' + x + '">';
-                        tabla += '<td style="width: 10%;" class="red">' + json[x].consultorio + '</td>';
+                        tabla += '<td style="width: 10%;" class="red">' + json[x].consultorio.toString().replace('90', '') + '</td>';
                         tabla += '<td style="width: 90%;"><span class="light-blue">MÉDICO: ' + json[x].medico + '</span><br><span class="blue">' + json[x].paciente + '</span></td>';
                         tabla += '</tr>';
                     } else {
@@ -209,7 +105,7 @@ function getTurnosAtendidos() {
                     }
                 }
             } else {
-                for (let x = 0; x < /*4*/ 2; x++) {
+                for (let x = 0; x < 4; x++) {
                     tabla += '<tr id="fila_' + x + '">';
                     tabla += '<td style="width: 10%;" class="red"></td>';
                     tabla += '<td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>';
@@ -260,7 +156,7 @@ function controlCadena(tBody) {
 function wsConnect() {
     const websocket = io(URL);
 
-    websocket.on('turnero2', (evt) => {
+    websocket.on('turnero9', (evt) => {
         onMessage(evt);
     });
 
@@ -297,7 +193,7 @@ function onClose(evt) {
 // Se invoca cuando se recibe un mensaje del servidor
 function onMessage(evt) {
     console.log(evt.turnero);
-    if (evt.turnero = 'turnero2') {
+    if (evt.turnero = 'turnero9') {
         var pacienteVerif = [];
         var nuevoPac = '';
         var correccion = '';
@@ -327,20 +223,20 @@ function onMessage(evt) {
 }
 
 async function mostrarTurno(evt) {
-    if (evt.turnero = 'turnero2') {
+    if (evt.turnero = 'turnero9') {
         var tabla = '';
-        if (evt.atendidos.length >= /*4*/ 2) {
+        if (evt.atendidos.length >= 4) {
             for (let x in evt.atendidos) {
                 tabla += '<tr id="fila_' + x + '">';
-                tabla += '<td style="width: 10%;" class="red">' + evt.atendidos[x].consultorio + '</td>';
+                tabla += '<td style="width: 10%;" class="red">' + evt.atendidos[x].consultorio.toString().replace('90', '') + '</td>';
                 tabla += '<td style="width: 90%;"><span class="light-blue">MÉDICO: ' + evt.atendidos[x].medico.replace('NH', 'Ñ') + '</span><br><span class="blue">' + evt.atendidos[x].paciente.replace('NH', 'Ñ') + '</span></td>';
                 tabla += '</tr>';
             }
-        } else if (evt.atendidos.length < /*4*/ 2 && evt.atendidos.length > 0) {
-            for (let x = 0; x < /*4*/ 2; x++) {
+        } else if (evt.atendidos.length < 4 && evt.atendidos.length > 0) {
+            for (let x = 0; x < 4; x++) {
                 if (x < evt.atendidos.length) {
                     tabla += '<tr id="fila_' + x + '">';
-                    tabla += '<td style="width: 10%;" class="red">' + evt.atendidos[x].consultorio + '</td>';
+                    tabla += '<td style="width: 10%;" class="red">' + evt.atendidos[x].consultorio.toString().replace('90', '') + '</td>';
                     tabla += '<td style="width: 90%;"><span class="light-blue">MÉDICO: ' + evt.atendidos[x].medico.replace('NH', 'Ñ') + '</span><br><span class="blue">' + evt.atendidos[x].paciente.replace('NH', 'Ñ') + '</span></td>';
                     tabla += '</tr>';
                 } else {
@@ -352,7 +248,7 @@ async function mostrarTurno(evt) {
                 }
             }
         } else {
-            for (let x = 0; x < /*4*/ 2; x++) {
+            for (let x = 0; x < 4; x++) {
                 tabla += '<tr id="fila_' + x + '">';
                 tabla += '<td style="width: 10%;" class="red"></td>';
                 tabla += '<td style="width: 90%;"><span class="light-blue"></span><br><span class="blue"></span></td>';
@@ -361,9 +257,10 @@ async function mostrarTurno(evt) {
         }
         document.getElementById('turnos').innerHTML = tabla;
         controlCadena('turnos');
-        document.getElementById("mostrarTurno").innerHTML = 'Consultorio ' + evt.consultorio + '<br><br>' + 'Paciente: ' + evt.paciente.replace('NH', 'Ñ');
+        document.getElementById("mostrarTurno").innerHTML = 'Box ' + evt.consultorio + '<br><br>' + 'Paciente: ' + evt.paciente.replace('NH', 'Ñ');
         mostrarModal();
-        var textoToSpeech = 'Consultorio número.! ' + evt.consultorio + '.!!!  Paciente.!' + evt.paciente.replace(' ', '  ').replace('NH', 'Ñ');
+        console.log(evt.consultorio);
+        var textoToSpeech = 'Box.! ' + evt.consultorio + '.!!!  Paciente.!' + evt.paciente.replace(' ', '  ').replace('NH', 'Ñ');
         var playSound = MUSIC.play();
         MUSIC.onended = function() {
                 playVoice('!!! ' + textoToSpeech);
@@ -417,6 +314,7 @@ function playVoice(text) {
     for (let i in voces) {
         console.log(voces[i].name);
         if (voces[i].name == 'Microsoft Sabina - Spanish (Mexico)') vozPosicion = i;
+        // if (voces[i].name == 'Microsoft Helena - Spanish (Spain)') vozPosicion = i;
     }
     voice.voice = voces[vozPosicion];
     console.log(voces[vozPosicion]);

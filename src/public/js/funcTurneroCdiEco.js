@@ -9,7 +9,7 @@ const TIEMPO_COLA = 3000;
 const MUSIC = new Audio('../sounds/store-door-chime.wav');
 //const URL = 'http://192.158.10.116:3000';
 //const URL = 'http://192.158.10.34:3000';
-const URL = 'http://127.0.0.1';
+const URL = 'http://127.0.0.1:3000';
 const API_VIDEOS_LIST = '/api/videos';
 const API_VIDEOS_STREAM = '/api/videos/stream';
 var mydata;
@@ -28,7 +28,7 @@ function init() {
     // Objeto de la API
     jarvis = window.speechSynthesis;
     disabledPlay = true;
-    voice.addEventListener("end", function() {
+    voice.addEventListener("end", function () {
         cerrarModal();
         //document.getElementById("myModal").style.display = "none";
     });
@@ -39,8 +39,9 @@ function init() {
 }
 
 //llama al lector de imagenes
+/* se cambia por video*/
 function images() {
-   /*$.get(URL + '/images1')
+    /*$.get(URL + '/images1')
         .done(function(data) {
             var jsonImages = JSON.parse(data);
             timerImage(jsonImages);
@@ -107,15 +108,15 @@ function adoptNextPlaylist() {
 function setSourceAndPlay(item) {
     if (!item) return;
     const player = document.getElementById('pubPlayer');
-    if (!player) {
-        console.error('No se encontró #pubPlayer en el DOM');
-        return;
-    }
-    player.src = item.src; // ej: /videos/spot1.mp4
+    if (!player) return;
+
+    // Bust de caché con mtime (si tu item ya trae mtimeMs del SSE/JSON)
+    const v = item.mtimeMs ? `?v=${Math.floor(item.mtimeMs)}` : '';
+    player.src = item.src + v;      // ej: /videos/spot1.mp4?v=1725312345
+
     const p = player.play?.();
     if (p && typeof p.then === 'function') {
         p.catch(err => {
-            // endurecer autoplay por políticas del navegador
             console.warn('Autoplay falló; forzando muted y reintentando:', err);
             player.muted = true;
             player.play().catch(() => { });
@@ -169,7 +170,7 @@ async function startVideoIfNeeded() {
 /*fin agregado */
 
 function timerImage(data) {
-    /*intervalo = window.setInterval(function() {
+    /*intervalo = window.setInterval(function () {
         var a = document.getElementById("imagen");
         a.src = '../images/zocaloTurn1/' + data[posicionActual].nombre;
         if (posicionActual >= data.length - 1) {
@@ -182,8 +183,8 @@ function timerImage(data) {
 }
 
 function getTurnosAtendidos() {
-    $.post(URL + '/atendidosTurnero/1/2')
-        .done(function(data) {
+    $.post(URL + '/atendidosTurneroCdi/1/1')
+        .done(function (data) {
             var json = JSON.parse(data);
             var tabla = '';
             if (json.length >= /*4*/ 2) {
@@ -218,14 +219,14 @@ function getTurnosAtendidos() {
             }
             document.getElementById('turnos').innerHTML = tabla;
             controlCadena('turnos');
-        }).fail(function(error) {
+        }).fail(function (error) {
             alert('Error al recuperar atendidos');
         });
 }
 
 //funcion que controla el nombre del paciente y el médico
 function controlCadena(tBody) {
-    $('#' + tBody + ' tr').find("td span:eq(1)").each(function() {
+    $('#' + tBody + ' tr').find("td span:eq(1)").each(function () {
         if ($(this).outerHeight() > 97) {
             var cadena = $(this).html();
             var arrayCadena = cadena.split(' ');
@@ -260,7 +261,7 @@ function controlCadena(tBody) {
 function wsConnect() {
     const websocket = io(URL);
 
-    websocket.on('turnero2', (evt) => {
+    websocket.on('turnero1', (evt) => {
         onMessage(evt);
     });
 
@@ -289,7 +290,7 @@ function onClose(evt) {
     console.log('Conexión inactiva');
 
     // Intenta reconectarse cada 2 segundos
-    setTimeout(function() {
+    setTimeout(function () {
         wsConnect()
     }, 2000);
 }
@@ -297,7 +298,7 @@ function onClose(evt) {
 // Se invoca cuando se recibe un mensaje del servidor
 function onMessage(evt) {
     console.log(evt.turnero);
-    if (evt.turnero = 'turnero2') {
+    if (evt.turnero = 'turnero1') {
         var pacienteVerif = [];
         var nuevoPac = '';
         var correccion = '';
@@ -322,12 +323,11 @@ function onMessage(evt) {
         } else {
             mostrarTurno(evt);
         }
-
     }
 }
 
 async function mostrarTurno(evt) {
-    if (evt.turnero = 'turnero2') {
+    if (evt.turnero = 'turnero1') {
         var tabla = '';
         if (evt.atendidos.length >= /*4*/ 2) {
             for (let x in evt.atendidos) {
@@ -365,15 +365,15 @@ async function mostrarTurno(evt) {
         mostrarModal();
         var textoToSpeech = 'Consultorio número.! ' + evt.consultorio + '.!!!  Paciente.!' + evt.paciente.replace(' ', '  ').replace('NH', 'Ñ');
         var playSound = MUSIC.play();
-        MUSIC.onended = function() {
-                playVoice('!!! ' + textoToSpeech);
-            }
-            /* if (playSound !== undefined) {
-                playSound.then(function() {
+        MUSIC.onended = function () {
+            playVoice('!!! ' + textoToSpeech);
+        }
+        /* if (playSound !== undefined) {
+            playSound.then(function() {
 
-                    //playVoice(textoToSpeech);
-                });
-            } */
+                //playVoice(textoToSpeech);
+            });
+        } */
     }
 }
 
@@ -397,7 +397,7 @@ function voices() {
     }
 
     // Obtenemos todas las voces soportadas
-    const getVoices = function() {
+    const getVoices = function () {
         const voices = jarvis.getVoices();
         voices.forEach(item => {
             const { name, lang } = item;
