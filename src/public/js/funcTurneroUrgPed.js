@@ -7,9 +7,9 @@ var posicionActual = 0;
 const TIEMPO_INTERVALO = 8000; //8 segundos  TIEMPO COLA ENTRE CAMBIO DE IMAGENES 
 const TIEMPO_COLA = 3000; //3 SEGUNDOS TIEMPO COLA LLAMADO
 const MUSIC = new Audio('../sounds/store-door-chime.wav');
-//const URL = 'http://192.158.10.116:3000';
+const URL = 'http://192.158.10.116:3000';
 //const URL = 'http://192.158.10.34:3000';
-const URL = 'http://127.0.0.1';
+//const URL = 'http://127.0.0.1';
 const API_VIDEOS_LIST = '/api/videos';
 const API_VIDEOS_STREAM = '/api/videos/stream';
 var mydata;
@@ -38,6 +38,7 @@ function init() {
 }
 
 //llama al lector de imagenes
+/* se cambia por video*/
 function images() {
     /*$.get(URL + '/images1')
         .done(function(data) {
@@ -106,15 +107,15 @@ function adoptNextPlaylist() {
 function setSourceAndPlay(item) {
     if (!item) return;
     const player = document.getElementById('pubPlayer');
-    if (!player) {
-        console.error('No se encontró #pubPlayer en el DOM');
-        return;
-    }
-    player.src = item.src; // ej: /videos/spot1.mp4
+    if (!player) return;
+
+    // Bust de caché con mtime (si tu item ya trae mtimeMs del SSE/JSON)
+    const v = item.mtimeMs ? `?v=${Math.floor(item.mtimeMs)}` : '';
+    player.src = item.src + v;      // ej: /videos/spot1.mp4?v=1725312345
+
     const p = player.play?.();
     if (p && typeof p.then === 'function') {
         p.catch(err => {
-            // endurecer autoplay por políticas del navegador
             console.warn('Autoplay falló; forzando muted y reintentando:', err);
             player.muted = true;
             player.play().catch(() => { });
